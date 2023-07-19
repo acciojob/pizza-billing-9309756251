@@ -2,43 +2,83 @@ package com.driver;
 
 public class Pizza {
 
-    protected int basePrice;
-    protected boolean extraCheeseAdded;
-    protected boolean extraToppingsAdded;
+    private int basePrice;
 
-    public Pizza(int basePrice) {
-        this.basePrice = basePrice;
-        this.extraCheeseAdded = false;
-        this.extraToppingsAdded = false;
+    private boolean isVeg;
+
+    private int toppingsPrice;
+
+    private int cheesePrice;
+
+    private String size;
+
+    private int carryBagPrice;
+
+    private boolean isCarryBagAdded;
+    private boolean isCheeseAdded;
+    private boolean isToppingsAdded;
+    private boolean isBillGenerated;
+
+    private String bill;
+
+    private int totalAmount;
+
+    //Initalize the values of the pizza
+    public Pizza(boolean isVeg,String size){
+
+        if(size=="Regular"){
+            if(isVeg)
+                basePrice = 100;
+            else
+                basePrice = 130;
+        }else{ //Else if it is a large pizza
+            if (isVeg)
+                basePrice = 200;
+            else
+                basePrice = 250;
+        }
+
+        this.toppingsPrice = 50;
+        this.cheesePrice = 40;
+        this.carryBagPrice = 20;
+
+        totalAmount = basePrice;
+        bill = "The base of the selected pizza is : "+basePrice+"\n";
     }
 
-    public void addExtraCheese() {
-        if (!extraCheeseAdded) {
-            this.basePrice += 80;
-            this.extraCheeseAdded = true;
+    public void addExtraCheese(){
+
+        if(isCheeseAdded==false) {
+            isCheeseAdded = true;
+            totalAmount = totalAmount + cheesePrice;
+            bill = bill + "Extra cheese added : " + cheesePrice + "\n";
         }
     }
 
-    public void addExtraToppings() {
-        if (!extraToppingsAdded) {
-            this.basePrice += 70;
-            this.extraToppingsAdded = true;
+    public void addExtraToppings(){
+        if(!isToppingsAdded) {
+            isToppingsAdded = true;
+            totalAmount = totalAmount + toppingsPrice;
+            bill = bill + " Extra toppings added : " + toppingsPrice + "\n";
         }
     }
 
-    public int getTotalPrice() {
-        return basePrice;
+    public void addExtraCarryBag(){
+
+        if(!isCarryBagAdded) {
+            isCarryBagAdded = true;
+            totalAmount = totalAmount + carryBagPrice;
+            bill = bill + "Extra carry bag added : " + carryBagPrice + "\n";
+        }
     }
 
-    public String generateBill() {
-        StringBuilder bill = new StringBuilder();
-        bill.append("Base Price Of The Pizza: ").append(basePrice).append("\n");
-        if (extraCheeseAdded) {
-            bill.append("Extra Cheese Added: ").append(80).append("\n");
+    public void printBill(){
+
+        if(isBillGenerated==false){
+            isBillGenerated = true;
+            bill = bill + "Total bill is equals : "+totalAmount + "\n";
         }
-        if (extraToppingsAdded) {
-            bill.append("Extra Toppings Added: ").append(70).append("\n");
-        }
-        return bill.toString();
+
+        System.out.println(bill);
     }
 }
